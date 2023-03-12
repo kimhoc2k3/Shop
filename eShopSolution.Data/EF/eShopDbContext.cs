@@ -1,5 +1,6 @@
 ﻿using eShopSolution.Data.Configurations;
 using eShopSolution.Data.Entities;
+using eShopSolution.Data.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace eShopSolution.Data.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //configuration 
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration()) ;
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
@@ -47,7 +49,11 @@ namespace eShopSolution.Data.EF
 
 
             //Data seeding
-
+            modelBuilder.Seed();
+            //modelBuilder.Entity<AppConfig>().HasData(
+            //    new AppConfig() { Key = "Home", Value = "This is home page of eShopSolution" },
+            //    new AppConfig() { Key = "HomeKeyword", Value = "This is home page of eShopSolution" },
+            //    new AppConfig() { Key = "Home", Value = "This is home page of eShopSolution" });
 
             //base.OnModelCreating(modelBuilder);
         }
