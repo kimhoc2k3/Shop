@@ -103,13 +103,13 @@ namespace eShopSolution.Data.Extensions
                 Id = adminId,
                 UserName = "admin",
                 NormalizedUserName = "admin",
-                Email = "tedu.international@gmail.com",
-                NormalizedEmail = "tedu.international@gmail.com",
+                Email = "hq37na@gmail.com",
+                NormalizedEmail = "hq37na@gmail.com",
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, "Abcd1234$"),
                 SecurityStamp = string.Empty,
-                FirstName = "Toan",
-                LastName = "Bach",
+                FirstName = "Hoc",
+                LastName = "Nguyen",
                 Dob = new DateTime(2020, 01, 31)
             });
 
@@ -127,6 +127,7 @@ namespace eShopSolution.Data.Extensions
               new Slide() { Id = 5, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 5, Url = "#", Image = "/themes/images/carousel/5.png", Status = Status.Active },
               new Slide() { Id = 6, Name = "Second Thumbnail label", Description = "Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.", SortOrder = 6, Url = "#", Image = "/themes/images/carousel/6.png", Status = Status.Active }
               );
+
         }
     }
 }

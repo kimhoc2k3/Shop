@@ -10,11 +10,11 @@ using System.Text;
 
 namespace eShopSolution.Data.EF
 {
-    public class eShopDbContext : DbContext
+    public class eShopDbContext : IdentityDbContext<AppUser,AppRole,Guid>
     {
         public eShopDbContext( DbContextOptions options) : base(options)
         {
-            
+                
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
