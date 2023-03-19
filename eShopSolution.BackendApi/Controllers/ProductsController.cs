@@ -15,16 +15,16 @@ namespace eShopSolution.BackendApi.Controllers
         private readonly IManageProductService _manageProductService;
 
         public ProductsController(IPublicProductService publicProductService, IManageProductService manageProductService)
-        { 
+        {
             _publicProductService = publicProductService;
             _manageProductService = manageProductService;
         }
-       
+
         //http://locahost:port//products?pageIndex=1&pageSize=10&CategoryId=
         [HttpGet("{languageId}")]
-        public async Task<IActionResult> GetAllPaging(string languageId,[FromQuery]GetPublicProductPageingRequest request)
+        public async Task<IActionResult> GetAllPaging(string languageId, [FromQuery] GetPublicProductPageingRequest request)
         {
-            var products = await _publicProductService.GetAllByCategoryId(languageId,request);
+            var products = await _publicProductService.GetAllByCategoryId(languageId, request);
             return Ok(products);
         }
         [HttpGet("{productId}/{languageId}")]
@@ -45,10 +45,10 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest(ModelState);
             }
             var productId = await _manageProductService.Create(request);
-            if (productId==0)
+            if (productId == 0)
                 return BadRequest();
-             var product = await _manageProductService.GetById(productId,request.LanguageId);
-            return CreatedAtAction(nameof(GetById),new {id = productId}, product);
+            var product = await _manageProductService.GetById(productId, request.LanguageId);
+            return CreatedAtAction(nameof(GetById), new { id = productId }, product);
         }
         [HttpPut]
         public async Task<IActionResult> Update([FromForm] ProductUpdateRequest request)
@@ -69,7 +69,7 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok();
         }
         [HttpPatch("price/{productId}/{newPrice}")]
-        public async Task<IActionResult> UpdatePrice( int productId, decimal newPrice)
+        public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
             var isSuccessful = await _manageProductService.UpdatePrice(productId, newPrice);
             if (isSuccessful)
@@ -78,13 +78,13 @@ namespace eShopSolution.BackendApi.Controllers
             return BadRequest();
         }
         [HttpPost("{productId}/images")]
-        public async Task<IActionResult> CreateImage(int productId,[FromForm] ProductImageCreateRequest request)
+        public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var imageId = await _manageProductService.AddImages(productId,request);
+            var imageId = await _manageProductService.AddImages(productId, request);
             if (imageId == 0)
                 return BadRequest();
             var image = await _manageProductService.GetImageById(imageId);
