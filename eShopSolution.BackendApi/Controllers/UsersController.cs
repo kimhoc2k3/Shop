@@ -50,14 +50,10 @@ namespace eShopSolution.BackendApi.Controllers
             {
                 return BadRequest(result);
             }
-            else
+            
             return Ok(result);
         }
-        //public IActionResult Update()
-        //{
-        //    var user = _userService.GetById();
-        //    return View();
-        //}
+        
         [HttpPut("{id}")]
         
         public async Task<IActionResult> Update(Guid id,[FromBody] UserUpdateRequest request)
@@ -75,6 +71,21 @@ namespace eShopSolution.BackendApi.Controllers
                 return Ok(result);
         }
 
+        [HttpPut("{id}/roles")]
+        public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.RoleAssign(id, request);
+
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(result);
+        }
         //api/users/paging/
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging( [FromQuery]GetUserPagingRequest  request)
