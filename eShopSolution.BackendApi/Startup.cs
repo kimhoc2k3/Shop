@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
 using FluentValidation;
 using eShopSolution.ViewModel.System.Users;
+using eShopSolution.Application.System.Roles;
 
 namespace eShopSolution.BackendApi
 {
@@ -52,7 +53,11 @@ namespace eShopSolution.BackendApi
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
+
+            services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
+            
+
 
 
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
