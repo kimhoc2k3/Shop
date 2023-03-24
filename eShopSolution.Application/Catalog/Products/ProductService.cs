@@ -157,7 +157,9 @@ namespace eShopSolution.Application.Catalog.Products
             var pageResult = new PagedResult<ProductViewModel>()
             {
                 TotalRecords = totalRow,
-                Items = data,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                Items = data
             };
             return pageResult;
         }
@@ -205,7 +207,9 @@ namespace eShopSolution.Application.Catalog.Products
             var pageResult = new PagedResult<ProductViewModel>()
             {
                 TotalRecords = totalRow,
-                Items = data,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
+                Items = data
             };
             return pageResult;
         }
