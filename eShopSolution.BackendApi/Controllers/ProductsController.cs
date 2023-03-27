@@ -23,10 +23,10 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         //http://locahost:port//products?pageIndex=1&pageSize=10&CategoryId=
-        [HttpGet("{languageId}")]
-        public async Task<IActionResult> GetAllPaging(string languageId, [FromQuery] GetPublicProductPageingRequest request)
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {
-            var products = await _manageProductService.GetAllByCategoryId(languageId, request);
+            var products = await _manageProductService.GetAllPaging(request);
             return Ok(products);
         }
         [HttpGet("{productId}/{languageId}")]
@@ -40,6 +40,7 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok(product);
         }
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -105,7 +106,8 @@ namespace eShopSolution.BackendApi.Controllers
             return Ok();
         }
         [HttpDelete("{productId}/images/{imageId}")]
-        public async Task<IActionResult> DeleteImage(int imageId)
+        [Authorize]
+        public async Task<IActionResult> RemoveImage(int imageId)
         {
             if (!ModelState.IsValid)
             {
@@ -114,6 +116,7 @@ namespace eShopSolution.BackendApi.Controllers
             var result = await _manageProductService.RemoveImages(imageId);
             if (result == 0)
                 return BadRequest();
+
             return Ok();
         }
         [HttpGet("{productId}/images/{imageId}")]
@@ -125,6 +128,20 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest("Can't find product");
             }
             return Ok(image);
+        }
+        [HttpPut("{id}/categories")]
+        [Authorize]
+        public async Task<IActionResult> CategoryAssign(int id, [FromBody] CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _manageProductService.CategoryAssign(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }

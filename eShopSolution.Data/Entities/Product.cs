@@ -14,6 +14,7 @@ namespace eShopSolution.Data.Entities
         public int Stock { get; set; }
         public int ViewCount { get; set; }
         public DateTime DateCreated { get; set; }
+        //public bool? IsFeatured { get; set; }
         public string SeoAlias { get; set; }
         public List<Cart> Carts { get; set; }
 
