@@ -16,6 +16,8 @@ namespace eShopSolution.AdminApp.Services
         Task<ApiResult<bool>> CategoryAssign(int id, CategoryAssignRequest request);
 
         Task<ProductVm> GetById(int id, string languageId);
+        Task<ProductVm> GetAll();
+
 
         //Task<List<ProductVm>> GetFeaturedProducts(string languageId, int take);
 

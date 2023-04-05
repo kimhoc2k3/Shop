@@ -25,6 +25,7 @@ using FluentValidation;
 using eShopSolution.ViewModel.System.Users;
 using eShopSolution.Application.System.Roles;
 using eShopSolution.Application.System.Languages;
+using eShopSolution.Application.Catalog.Categories;
 
 namespace eShopSolution.BackendApi
 {
@@ -51,6 +52,8 @@ namespace eShopSolution.BackendApi
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();

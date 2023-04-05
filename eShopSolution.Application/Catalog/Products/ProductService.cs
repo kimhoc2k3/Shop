@@ -142,7 +142,7 @@ namespace eShopSolution.Application.Catalog.Products
             var query = from p in _context.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId
-                        join c in _context.categories on pic.CategoryId equals c.Id
+                        join c in _context.Categories on pic.CategoryId equals c.Id
                         where pt.LanguageId == languageId
                         select new { p, pt, pic };
             //2.Filter
@@ -189,10 +189,10 @@ namespace eShopSolution.Application.Catalog.Products
                         join pt in _context.ProductTranslations on p.Id equals pt.ProductId
                         join pic in _context.ProductInCategories on p.Id equals pic.ProductId into ppic
                         from pic in ppic.DefaultIfEmpty()
-                        join c in _context.categories on pic.CategoryId equals c.Id into picc
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
-                        //join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
-                        //from pi in ppi.DefaultIfEmpty()
+                        join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
+                        from pi in ppi.DefaultIfEmpty()
                         where pt.LanguageId == request.LanguageId //&& pi.IsDefault == true
                         select new { p, pt,pic/*, pi*/ };
             //2. filter
@@ -411,7 +411,7 @@ namespace eShopSolution.Application.Catalog.Products
                         from pic in ppic.DefaultIfEmpty()
                         join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
                         from pi in ppi.DefaultIfEmpty()
-                        join c in _context.categories on pic.CategoryId equals c.Id into picc
+                        join c in _context.Categories   on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
                         where pt.LanguageId == languageId && (pi == null || pi.IsDefault == true)
                         //&& p.IsFeatured == true
@@ -448,7 +448,7 @@ namespace eShopSolution.Application.Catalog.Products
                         from pic in ppic.DefaultIfEmpty()
                         join pi in _context.ProductImages on p.Id equals pi.ProductId into ppi
                         from pi in ppi.DefaultIfEmpty()
-                        join c in _context.categories on pic.CategoryId equals c.Id into picc
+                        join c in _context.Categories on pic.CategoryId equals c.Id into picc
                         from c in picc.DefaultIfEmpty()
                         where pt.LanguageId == languageId && (pi == null || pi.IsDefault == true)
                         select new { p, pt, pic, pi };
@@ -473,6 +473,11 @@ namespace eShopSolution.Application.Catalog.Products
                 }).ToListAsync();
 
             return data;
+        }
+
+        public Task<List<ProductVm>> GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

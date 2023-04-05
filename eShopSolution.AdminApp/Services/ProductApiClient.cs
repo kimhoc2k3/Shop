@@ -84,9 +84,9 @@ namespace eShopSolution.AdminApp.Services
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
-
+    
             var requestContent = new MultipartFormDataContent();
-
+            
             if (request.ThumbnailImage != null)
             {
                 byte[] data;
@@ -95,7 +95,7 @@ namespace eShopSolution.AdminApp.Services
                     data = br.ReadBytes((int)request.ThumbnailImage.OpenReadStream().Length);
                 }
                 ByteArrayContent bytes = new ByteArrayContent(data);
-                requestContent.Add(bytes, "thumbnailImage", request.ThumbnailImage.FileName);
+                requestContent.Add(bytes, "ThumbnailImage", request.ThumbnailImage.FileName);
             }
 
             //requestContent.Add(new StringContent(request.Id.ToString()), "id");
@@ -109,7 +109,7 @@ namespace eShopSolution.AdminApp.Services
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.SeoAlias) ? "" : request.SeoAlias.ToString()), "seoAlias");
             requestContent.Add(new StringContent(languageId), "languageId");
 
-            var response = await client.PutAsync($"/api/products/" + request.Id, requestContent);
+            var response = await client.PutAsync($"/api/Products/" + request.Id, requestContent);
             return response.IsSuccessStatusCode;
         }
 
@@ -118,7 +118,7 @@ namespace eShopSolution.AdminApp.Services
             var data = await GetAsync<PagedResult<ProductVm>>(
                 $"/api/Products/paging?pageIndex={request.PageIndex}" +
                 $"&pageSize={request.PageSize}" +
-                $"&keyword={request.Keyword}&languageId={request.LanguageId}");/*&categoryId={request.CategoryId}*/
+                $"&keyword={request.Keyword}&languageId={request.LanguageId}&categoryId={request.CategoryId}");
 
             return data;
         }
@@ -165,6 +165,11 @@ namespace eShopSolution.AdminApp.Services
         public async Task<bool> DeleteProduct(int id)
         {
             return await Delete($"/api/products/" + id);
+        }
+
+        public Task<ProductVm> GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

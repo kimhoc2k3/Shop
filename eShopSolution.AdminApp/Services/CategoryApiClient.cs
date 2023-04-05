@@ -16,10 +16,10 @@ namespace eShopSolution.AdminApp.Services
         {
         }
 
-        //public async Task<List<CategoryVm>> GetAll(string languageId)
-        //{
-        //    return await GetListAsync<CategoryVm>("/api/categories?languageId=" + languageId);
-        //}
+        public async Task<List<CategoryVm>> GetAll(string languageId)
+        {
+            return await GetListAsync<CategoryVm>("/api/categories?languageId=" + languageId);
+        }
 
         public async Task<CategoryVm> GetById(string languageId, int id)
         {

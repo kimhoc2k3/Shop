@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +16,6 @@ namespace eShopSolution.AdminApp.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IConfiguration _configuration;
-
         private readonly ICategoryApiClient _categoryApiClient;
 
         public ProductController(IProductApiClient productApiClient,
@@ -26,8 +26,8 @@ namespace eShopSolution.AdminApp.Controllers
             _productApiClient = productApiClient;
             _categoryApiClient = categoryApiClient;
         }
-
-        public async Task<IActionResult> Index(string keyword/*, int? categoryId*/, int pageIndex = 1, int pageSize = 10)
+        
+        public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 10)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
@@ -37,24 +37,31 @@ namespace eShopSolution.AdminApp.Controllers
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 LanguageId = languageId,
-                //CategoryId = categoryId
+                CategoryId = categoryId
             };
             var data = await _productApiClient.GetPagings(request);
             ViewBag.Keyword = keyword;
 
-            //var categories = await _categoryApiClient.GetAll(languageId);
-            //ViewBag.Categories = categories.Select(x => new SelectListItem()
-            //{
-            //    Text = x.Name,
-            //    Value = x.Id.ToString(),
-            //    Selected = categoryId.HasValue && categoryId.Value == x.Id
-            //});
+            var categories = await _categoryApiClient.GetAll(languageId);
+            ViewBag.Categories = categories.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString(),
+                Selected = categoryId.HasValue && categoryId.Value == x.Id
+            });
 
             if (TempData["result"] != null)
             {
                 ViewBag.SuccessMsg = TempData["result"];
             }
             return View(data);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+            var result = await _productApiClient.GetById(id, languageId);
+            return View(result);
         }
 
         [HttpGet]
@@ -81,32 +88,32 @@ namespace eShopSolution.AdminApp.Controllers
             return View(request);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> CategoryAssign(int id)
-        //{
-        //    var roleAssignRequest = await GetCategoryAssignRequest(id);
-        //    return View(roleAssignRequest);
-        //}
+        [HttpGet]
+        public async Task<IActionResult> CategoryAssign(int id)
+        {
+            var roleAssignRequest = await GetCategoryAssignRequest(id);
+            return View(roleAssignRequest);
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CategoryAssign(CategoryAssignRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View();
+        [HttpPost]
+        public async Task<IActionResult> CategoryAssign(CategoryAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
 
-        //    var result = await _productApiClient.CategoryAssign(request.Id, request);
+            var result = await _productApiClient.CategoryAssign(request.Id, request);
 
-        //    if (result.IsSuccessed)
-        //    {
-        //        TempData["result"] = "Cập nhật danh mục thành công";
-        //        return RedirectToAction("Index");
-        //    }
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Cập nhật danh mục thành công";
+                return RedirectToAction("Index");
+            }
 
-        //    ModelState.AddModelError("", result.Message);
-        //    var roleAssignRequest = await GetCategoryAssignRequest(request.Id);
+            ModelState.AddModelError("", result.Message);
+            var roleAssignRequest = await GetCategoryAssignRequest(request.Id);
 
-        //    return View(roleAssignRequest);
-        //}
+            return View(roleAssignRequest);
+        }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -145,24 +152,24 @@ namespace eShopSolution.AdminApp.Controllers
             return View(request);
         }
 
-        //private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
-        //{
-        //    var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+        private async Task<CategoryAssignRequest> GetCategoryAssignRequest(int id)
+        {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
-        //    var productObj = await _productApiClient.GetById(id, languageId);
-        //    //var categories = await _categoryApiClient.GetAll(languageId);
-        //    var categoryAssignRequest = new CategoryAssignRequest();
-        //    foreach (var role in categories)
-        //    {
-        //        categoryAssignRequest.Categories.Add(new SelectItem()
-        //        {
-        //            Id = role.Id.ToString(),
-        //            Name = role.Name,
-        //            Selected = productObj.Categories.Contains(role.Name)
-        //        });
-        //    }
-        //    return categoryAssignRequest;
-        //}
+            var productObj = await _productApiClient.GetById(id, languageId);
+            var categories = await _categoryApiClient.GetAll(languageId);
+            var categoryAssignRequest = new CategoryAssignRequest();
+            foreach (var role in categories)
+            {
+                categoryAssignRequest.Categories.Add(new SelectItem()
+                {
+                    Id = role.Id.ToString(),
+                    Name = role.Name,
+                    Selected = productObj.Categories.Contains(role.Name)
+                });
+            }
+            return categoryAssignRequest;
+        }
 
         [HttpGet]
         public IActionResult Delete(int id)
@@ -189,5 +196,8 @@ namespace eShopSolution.AdminApp.Controllers
             ModelState.AddModelError("", "Xóa không thành công");
             return View(request);
         }
+
+
+        //PH27522-Nguyễn Kim Học
     }
 }
