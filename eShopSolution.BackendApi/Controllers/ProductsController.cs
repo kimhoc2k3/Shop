@@ -11,7 +11,7 @@ namespace eShopSolution.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProductsController : ControllerBase
     {
         
@@ -40,8 +40,26 @@ namespace eShopSolution.BackendApi.Controllers
             }
             return Ok(product);
         }
-        [HttpPost]
+
+		[HttpGet("featured/{languageId}/{take}")]
+		[AllowAnonymous]
+		public async Task<IActionResult> GetFeaturedProducts(int take, string languageId)
+		{
+			var products = await _manageProductService.GetFeaturedProducts(languageId,take);
+			
+			return Ok(products);
+		}
+
+		[HttpGet("latest/{languageId}/{take}")]
+		[AllowAnonymous]
+		public async Task<IActionResult> GetLatestProducts(int take, string languageId)
+		{
+			var products = await _manageProductService.GetLatestProducts(languageId, take);
+			return Ok(products);
+		}
+		[HttpPost]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -54,8 +72,9 @@ namespace eShopSolution.BackendApi.Controllers
             var product = await _manageProductService.GetById(productId, request.LanguageId);
             return CreatedAtAction(nameof(GetById), new { id = productId }, product);
         }
-        [HttpPut]
+        [HttpPut("{productId}")]
         [Consumes("multipart/form-data")]
+        [Authorize]
         public async Task<IActionResult> Update([FromRoute] int productId, [FromForm] ProductUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -68,16 +87,17 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest();
             return Ok();
         }
-        [HttpDelete("productId")]
+        [HttpDelete("{productId}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int productId)
         {
             var affectedResult = await _manageProductService.Delete(productId);
             if (affectedResult == 0)
                 return BadRequest();
-
             return Ok();
         }
         [HttpPatch("price/{productId}/{newPrice}")]
+        [Authorize]
         public async Task<IActionResult> UpdatePrice(int productId, decimal newPrice)
         {
             var isSuccessful = await _manageProductService.UpdatePrice(productId, newPrice);
@@ -87,6 +107,7 @@ namespace eShopSolution.BackendApi.Controllers
             return BadRequest();
         }
         [HttpPost("{productId}/images")]
+        [Authorize]
         public async Task<IActionResult> CreateImage(int productId, [FromForm] ProductImageCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -100,6 +121,7 @@ namespace eShopSolution.BackendApi.Controllers
             return CreatedAtAction(nameof(GetImageById), new { id = imageId }, image);
         }
         [HttpPut("{productId}/images/{imageId}")]
+        [Authorize]
         public async Task<IActionResult> UpdateImage(int imageId, [FromForm] ProductImageUpdateRequest request)
         {
             if (!ModelState.IsValid)

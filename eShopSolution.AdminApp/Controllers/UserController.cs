@@ -1,4 +1,4 @@
-﻿using eShopSolution.AdminApp.Services;
+﻿using eShopSolution.ApiIntegration;
 using eShopSolution.ViewModel.Common;
 using eShopSolution.ViewModel.System.Users;
 using Microsoft.AspNetCore.Authentication;
@@ -67,6 +67,7 @@ namespace eShopSolution.AdminApp.Controllers
         {
             if (!ModelState.IsValid)
                  return View(ModelState);
+            
             var result = await _userApiClient.RegisterUser(request);
             if (result.IsSuccessed)
             { 

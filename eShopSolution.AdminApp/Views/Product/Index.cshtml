@@ -73,7 +73,7 @@
                             <th>
                                 Số lượng tồn
                             </th>
-
+                            
                             <th></th>
                         </tr>
                     </thead>
@@ -84,9 +84,18 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Id)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
+                                @if (item.price * item.Stock > 1000000)
+                                {
+                                    <td style="color:yellow!important">
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Name)
+                                    </td>
+                                }
                                 <td>
                                     @Html.DisplayFor(modelItem => item.OriginalPrice)
                                 </td>
