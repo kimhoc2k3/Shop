@@ -1,5 +1,7 @@
 ﻿using eShopSolution.AdminApp.Models;
+using eShopSolution.ApiIntegration;
 using eShopSolution.Utilities.Constants;
+using eShopSolution.ViewModel.Catalog.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,17 +18,51 @@ namespace eShopSolution.AdminApp.Controllers
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IProductApiClient _productApiClient;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IProductApiClient productApiClient)
         {
             _logger = logger;
+            _productApiClient = productApiClient;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string keyword/*, int? categoryId*/, int pageIndex = 1, int pageSize = 10)
         {
+            var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
+
+            var request = new GetManageProductPagingRequest()
+            {
+                Keyword = keyword,
+                PageIndex = pageIndex,
+                PageSize = pageSize,
+                LanguageId = languageId,
+                //CategoryId = categoryId
+            };
+            var data = await _productApiClient.GetPagings(request);
+            ViewBag.Keyword = keyword;
+
+            //var categories = await _categoryApiClient.GetAll(languageId);
+            //ViewBag.Categories = categories.Select(x => new SelectListItem()
+            //{
+            //    Text = x.Name,
+            //    Value = x.Id.ToString(),
+            //    Selected = categoryId.HasValue && categoryId.Value == x.Id
+            //});
+
+            if (TempData["result"] != null)
+            {
+                ViewBag.SuccessMsg = TempData["result"];
+            }
+            //var product= _productApiClient.GetById()
             var user = User.Identity.Name;
-            return View();
+            return View(data);
         }
+        //public async Task<IActionResult> Index(int id)
+        //{
+            
+        //    var user = User.Identity.Name;
+        //    return View();
+        //}
 
         public IActionResult Privacy()
         {

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.WebApp", "DA1\eShopSolution.WebApp.csproj", "{3B557BBB-6708-4C01-BFD6-A3E915DC7E9F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27AFA561-0FC7-42F3-BD67-C4EF3A7F9960}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
@@ -20,7 +18,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.ViewModel", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.BackendApi", "eShopSolution.BackendApi\eShopSolution.BackendApi.csproj", "{464D0834-4D7B-410A-A197-BE86CF3D6B1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.AdminApp", "eShopSolution.AdminApp\eShopSolution.AdminApp.csproj", "{EA2D7FAF-8962-422B-8867-71F1ED6388F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.AdminApp", "eShopSolution.AdminApp\eShopSolution.AdminApp.csproj", "{EA2D7FAF-8962-422B-8867-71F1ED6388F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.WebApp", "eShopSolution.WebApp\eShopSolution.WebApp.csproj", "{4EFF5750-A470-423C-9874-FCF59D4279C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.ApiIntegration", "eShopSolution.ApiIntegration\eShopSolution.ApiIntegration.csproj", "{1E6E6659-2D52-435D-88C4-F9F04DE52A2F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +30,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3B557BBB-6708-4C01-BFD6-A3E915DC7E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3B557BBB-6708-4C01-BFD6-A3E915DC7E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3B557BBB-6708-4C01-BFD6-A3E915DC7E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3B557BBB-6708-4C01-BFD6-A3E915DC7E9F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F5008F91-F1EE-4296-ADFC-C193F350D42A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F5008F91-F1EE-4296-ADFC-C193F350D42A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5008F91-F1EE-4296-ADFC-C193F350D42A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -56,6 +54,14 @@ Global
 		{EA2D7FAF-8962-422B-8867-71F1ED6388F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA2D7FAF-8962-422B-8867-71F1ED6388F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA2D7FAF-8962-422B-8867-71F1ED6388F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EFF5750-A470-423C-9874-FCF59D4279C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EFF5750-A470-423C-9874-FCF59D4279C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EFF5750-A470-423C-9874-FCF59D4279C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EFF5750-A470-423C-9874-FCF59D4279C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E6E6659-2D52-435D-88C4-F9F04DE52A2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E6E6659-2D52-435D-88C4-F9F04DE52A2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E6E6659-2D52-435D-88C4-F9F04DE52A2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E6E6659-2D52-435D-88C4-F9F04DE52A2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -180,7 +180,7 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("8d04dce2-969a-435d-bba4-df3f325983dc"),
-                            ConcurrencyStamp = "bad3dc0f-da15-4c23-81e2-fcad635274df",
+                            ConcurrencyStamp = "b081d90c-9817-462c-9bb0-791a5cb68a50",
                             Description = "Administrator role",
                             Name = "admin",
                             NormalizedName = "admin"
@@ -257,7 +257,7 @@ namespace eShopSolution.Data.Migrations
                         {
                             Id = new Guid("69bd714f-9576-45ba-b5b7-f00649be00de"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e75373d0-1f96-4889-8c93-1eb4723069fc",
+                            ConcurrencyStamp = "e9f766b3-6a58-4d00-bdd9-f5dd0ee5ad78",
                             Dob = new DateTime(2020, 1, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "hq37na@gmail.com",
                             EmailConfirmed = true,
@@ -266,7 +266,7 @@ namespace eShopSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "hq37na@gmail.com",
                             NormalizedUserName = "admin",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKHAOcSSajGYnyTROSRn9kaBazIZ5ktiKcqbt7QxDywaPuRHZPb4GqYFnTO9FiYFbg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDFRQpl0r3cxLi2wrl9Rr4dlhkN4mx4Bndn1pMnDI/0QuuSsIod8gXgol30yZErZQQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -312,6 +312,8 @@ namespace eShopSolution.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<bool>("IsShowOnHome")
@@ -583,6 +585,9 @@ namespace eShopSolution.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool?>("IsFeatured")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("OriginalPrice")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(18,2)")
@@ -612,7 +617,7 @@ namespace eShopSolution.Data.Migrations
                         new
                         {
                             Id = 1,
-                            DateCreated = new DateTime(2023, 3, 14, 10, 2, 19, 205, DateTimeKind.Local).AddTicks(2388),
+                            DateCreated = new DateTime(2023, 4, 9, 1, 54, 55, 60, DateTimeKind.Local).AddTicks(1849),
                             OriginalPrice = 100000m,
                             Stock = 0,
                             ViewCount = 0,
