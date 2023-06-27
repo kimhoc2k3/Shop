@@ -84,18 +84,9 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Id)
                                 </td>
-                                @if (item.price * item.Stock > 1000000)
-                                {
-                                    <td style="color:yellow!important">
+                                <td >
                                         @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Name)
-                                    </td>
-                                }
+                                </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.OriginalPrice)
                                 </td>

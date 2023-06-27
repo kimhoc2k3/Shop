@@ -1,4 +1,4 @@
-﻿using eShopSolution.Application.Catalog.Products;
+﻿ using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Data.Entities;
 using eShopSolution.ViewModel.Catalog.ProductImages;
 using eShopSolution.ViewModel.Catalog.Products;
@@ -11,7 +11,7 @@ namespace eShopSolution.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    //[Authorize(Roles ="admin")]
     public class ProductsController : ControllerBase
     {
         

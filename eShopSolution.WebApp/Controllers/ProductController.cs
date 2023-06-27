@@ -37,7 +37,7 @@ namespace eShopSolution.WebApp.Controllers
 			{
 				Category = await _categoryApiClient.GetById(culture, id),
 				Products = products
-			}); ;
+			}); 
 		}
 		
 	}

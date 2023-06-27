@@ -8,7 +8,6 @@ namespace eShopSolution.Data.Entities
     public class Product
     {
         public int Id { get; set; } 
-
         public  decimal price { get; set; }
         public decimal OriginalPrice { get; set; }
         public int Stock { get; set; }
