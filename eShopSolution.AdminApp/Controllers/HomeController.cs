@@ -55,14 +55,11 @@ namespace eShopSolution.AdminApp.Controllers
             }
             //var product= _productApiClient.GetById()
             var user = User.Identity.Name;
+            
+            //var role = Role.Identity.Name;
             return View(data);
         }
-        //public async Task<IActionResult> Index(int id)
-        //{
-            
-        //    var user = User.Identity.Name;
-        //    return View();
-        //}
+       
 
         public IActionResult Privacy()
         {

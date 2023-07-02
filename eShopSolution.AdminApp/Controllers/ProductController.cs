@@ -2,16 +2,20 @@
 using eShopSolution.Utilities.Constants;
 using eShopSolution.ViewModel.Catalog.Products;
 using eShopSolution.ViewModel.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
+using eShopSolution.AdminApp.Controllers;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp.Controllers
 {
+    //[Authorize(Roles = jwt)]
     public class ProductController : Controller
     {
         private readonly IProductApiClient _productApiClient;
@@ -29,6 +33,7 @@ namespace eShopSolution.AdminApp.Controllers
         
         public async Task<IActionResult> Index(string keyword, int? categoryId, int pageIndex = 1, int pageSize = 10)
         {
+           
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);
 
             var request = new GetManageProductPagingRequest()
@@ -65,12 +70,14 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         [HttpGet]
+       
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
         {
@@ -116,6 +123,7 @@ namespace eShopSolution.AdminApp.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy ="admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var languageId = HttpContext.Session.GetString(SystemConstants.AppSettings.DefaultLanguageId);

@@ -11,7 +11,7 @@ namespace eShopSolution.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles ="admin")]
+    
     public class ProductsController : ControllerBase
     {
         
@@ -25,6 +25,7 @@ namespace eShopSolution.BackendApi.Controllers
 
         //http://locahost:port//products?pageIndex=1&pageSize=10&CategoryId=
         [HttpGet("paging")]
+        
         public async Task<IActionResult> GetAllPaging([FromQuery] GetManageProductPagingRequest request)
         {
             var products = await _manageProductService.GetAllPaging(request);
