@@ -24,8 +24,8 @@ namespace eShopSolution.Application.System.Users
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
-        
 
+       
 
 
         public UserService(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager, 
@@ -56,6 +56,7 @@ namespace eShopSolution.Application.System.Users
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
                 new Claim(ClaimTypes.Name, request.UserName)
             };
+            //bool isInRole = await _userManager.IsInRoleAsync(user, "admin");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

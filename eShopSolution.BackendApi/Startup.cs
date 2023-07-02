@@ -46,9 +46,11 @@ namespace eShopSolution.BackendApi
 
             services.AddDbContext<eShopDbContext>(options =>
                                             options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
-            services.AddIdentity<AppUser, AppRole>()
+            services.AddIdentity<AppUser,AppRole>()
                 .AddEntityFrameworkStores<eShopDbContext>()
                 .AddDefaultTokenProviders();
+            
+
 
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
@@ -63,11 +65,6 @@ namespace eShopSolution.BackendApi
             services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
             
-            
-            
-
-
-
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             //services.AddTransient<IValidator<RegisterRequest>, RegisterRequestValidator>();
 

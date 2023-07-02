@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
 using eShopSolution.ApiIntegration;
@@ -13,6 +12,12 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using eShopSolution.Utilities.Constants;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Routing;
+
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace eShopSolution.AdminApp.Controllers
 {
@@ -44,20 +49,25 @@ namespace eShopSolution.AdminApp.Controllers
                 ModelState.AddModelError("",result.Message);
                 return View();
             }
+            
             var userPrincipal = this.ValidateToken(result.ResultObj);
+            //userPrincipal.IsInRole = true;
+            
             var authProperties = new AuthenticationProperties
             {
                 ExpiresUtc = DateTime.UtcNow.AddMinutes(10),
                 IsPersistent = false
+                
             };
             HttpContext.Session.SetString(SystemConstants.AppSettings.DefaultLanguageId, _configuration["DefaultLanguageId"]);
             HttpContext.Session.SetString(SystemConstants.AppSettings.Token, result.ResultObj);
+            
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 userPrincipal,
                 authProperties);
             return RedirectToAction("Index", "Home");
         }
-        private ClaimsPrincipal ValidateToken(string jwtToken)
+        public ClaimsPrincipal ValidateToken(string jwtToken)
         {
             IdentityModelEventSource.ShowPII = true;
 
